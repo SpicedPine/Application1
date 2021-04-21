@@ -1,9 +1,9 @@
-﻿#include <stdio.h>
+#include <stdio.h>
 #include <omp.h>
 #include <iostream>
 
 int main(){
-	for (size_t i = 0; i < 20; i++)
+	for (size_t j = 1; j < 21; j++)
 	{
 		long long n = 2000000000;
 		int i;
@@ -13,7 +13,7 @@ int main(){
 		h = 1.0 / (double)n;
 		sum = 0.0;
 
-		omp_set_num_threads(i);
+		omp_set_num_threads(j);
 		tim = omp_get_wtime();
 #pragma omp parallel default (none) private (i,x) shared (n,h) reduction(+:sum)
 
@@ -28,7 +28,8 @@ int main(){
 
 		pi = h * sum;
 		tim = omp_get_wtime() - tim;
-
+		
+		printf("number of threads: %d\n", j);
 		printf("pi is approximately %.16f\n", pi);
 		printf("time of execution %.6f\n", tim);
 	}
